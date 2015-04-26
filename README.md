@@ -23,6 +23,8 @@ System Requriments:
 None
 
 Bugs/Glitches:
+Early in the cycle, i was using linked lists for collisions but ended up running into to many segmentation faults, so I switched to using vectors instead.
+Currently, there is nothing checking for duplicate games in the shopping cart.
 
 Contributers:
 This is a solo project
