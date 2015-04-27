@@ -211,7 +211,7 @@ void hashTable::checkOut(){
         for(unsigned int i = 0; i<cart.size(); i++){
             sum = sum + cart[i].price;
         }
-        if(budget > sum || budget == sum){
+        if(budget >= sum){
             for(unsigned int j = 0; j<cart.size(); j++){
                 deleteGame(cart[j].title);
             }

@@ -1,0 +1,20 @@
+Star Wars Jedi Knight: Jedi Academy,81,Action,10
+FEZ,91,Platformer/Puzzle,10
+Grand Theft Auto IV,90,Open World/Sandbox,20
+Half Life 2,96,First Person Shooter,10
+Portal 2,95,Puzzle,20
+Sleeping Dogs,81,Open World/Sandbox,30
+Star Wars: Republic Commando,78,First Person Shooter/Action,30
+Star Wars: Knights of the Old Republic,93,RPG,10
+Terraria,83,Open World/Platformer,10
+Outlast,80,Horror/Survival,20
+Castle Crashers,82,Action/RPG,15
+Battlefield: Bad Company 2,83,First Person Shooter/Action,35
+Call of Cthulhu: Dark Corners of the Earth,76,Horror/Survival,5
+Halo 3,87,First Person Shooter/Action,15
+Amnesia: The Dark Decent,85,Horror/Survival,15
+Counter Strike: Source,88,First Person Shooter/Action,10
+Audiosurf,85,Indie Games/Music,5
+Borderlands 2,89,First Person Shooter/RPG/Open World,35
+Deus Ex: Human Revolution,90, First Person Shooter/RPG/Open World,20
+Far Cry 3: Blood Dragon,76,Open World/First Person Shooter,20
