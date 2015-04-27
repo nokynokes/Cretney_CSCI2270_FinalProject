@@ -9,12 +9,7 @@ using namespace std;
 
 hashTable::hashTable()
 {
-    /*table_size = size;
-    table = new VideoGame*[table_size];
-    for(int i = 0; i<table_size;i++){
-        table[i] = NULL;
-    }*/
-
+    
 }
 
 hashTable::~hashTable()
@@ -114,8 +109,15 @@ void hashTable::findGame(string name)
                     cin.clear();
                     switch(input){
                         case 1:
-                            cart.push_back((*table[index])[i]);
-                            cout<<(*table[index])[i].title<<" has been added to the shopping cart"<<endl;
+                            if((*table[index])[i].added != true){
+                                cart.push_back((*table[index])[i]);
+                                cout<<(*table[index])[i].title<<" has been added to the shopping cart"<<endl;
+                                (*table[index])[i].added = true;
+                            }
+                            else{
+                                cout<<(*table[index])[i].title<<" is already in the shopping cart"<<endl;
+                            }
+                            
                             break;
                         case 2:
                             info = getInfo((*table[index])[i].title);
@@ -286,3 +288,4 @@ string hashTable::getInfo(string name)
     }
 
 }
+

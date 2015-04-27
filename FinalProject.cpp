@@ -1,3 +1,4 @@
+
 #include "hashTable.h"
 #include "hashTable.cpp"
 #include <iostream>
@@ -18,7 +19,7 @@ int main()
     string title;
     string rating;
     string genre;
-    int budget;
+    int budget = false;
 
     while(input != 6){
 
@@ -63,7 +64,7 @@ int main()
 
 void printMenu()
 {
-    cout << "======Main Menu=====" << endl;
+    cout << "======Welcome to Nolan's online game store!=====" << endl;
     cout << "1. View Store" << endl;
     cout << "2. View Shopping Cart"<< endl;
     cout << "3. View Balance"<< endl;

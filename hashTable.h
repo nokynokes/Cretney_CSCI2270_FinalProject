@@ -10,6 +10,7 @@ struct VideoGame{
     int rating;
     std::string genre;
     int price;
+    bool added = false;
     //VideoGame *next;
 
     VideoGame(){};
