@@ -30,9 +30,11 @@ Contributers:
 This is a solo project
 
 To-do List:
-Make the menu fancier?
-Add more games to txt files
-Sort Alphabectically for collisions
+Make the menu fancier?,
+Add more games to txt files,
+Sort Alphabectically for collisions,
+Add a delete function for shopping cart,
+
 
 
 
