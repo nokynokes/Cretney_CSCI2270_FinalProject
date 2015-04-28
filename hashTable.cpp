@@ -1,3 +1,4 @@
+
 #include "hashTable.h"
 #include <iostream>
 #include <cstdlib>
@@ -159,7 +160,7 @@ void hashTable::deleteGame(string title){
                 found = true;
                 if(table2[index] != NULL){//searching the 2nd hashtable
                     for(unsigned int j = 0; j<table2[index]->size(); j++){
-                        if((*table2[index])[j].name = title){
+                        if((*table2[index])[j].name == title){
                             table2[index]->erase(table2[index]->begin() + j); //deleting from 2nd hashtable
                             break;
                         }
