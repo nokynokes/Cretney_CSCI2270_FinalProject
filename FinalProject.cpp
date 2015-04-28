@@ -30,25 +30,31 @@ int main()
 
         switch(input)
         {
+            //Prints all games
             case 1:
                 v.printInventory();
                 break;
+            //Prints all games in shopping cart
             case 2:
                 v.viewShoppingCart();
                 break;
+            //Returns the budget
             case 3:
                 budget = v.getBalance();
                 cout<< "$" <<budget<<" remaining"<<endl;
                 break;
+            //Find a game
             case 4:
                 cin.ignore(100, '\n');
                 cout<<"Enter a title: "<<endl;
                 getline(cin,title);
                 v.findGame(title);
                 break;
+            //Deletes games from the cart and inventory
             case 5:
                 v.checkOut();
                 break;
+            //Quit
             case 6:
                 break;
             default:

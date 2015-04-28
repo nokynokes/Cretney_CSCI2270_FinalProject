@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <vector>
 
+//I use two hash tables, on for the price and score, the other for the rating and info
 
 struct VideoGame{
     std::string title;
@@ -11,7 +12,6 @@ struct VideoGame{
     std::string genre;
     int price;
     bool added = false;
-    //VideoGame *next;
 
     VideoGame(){};
 

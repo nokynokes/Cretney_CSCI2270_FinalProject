@@ -7,16 +7,22 @@
 #include <fstream>
 using namespace std;
 
+//ctor
 hashTable::hashTable()
 {
     
 }
 
+//dtor
 hashTable::~hashTable()
 {
     for(int i = 0; i<table_size;i++){
-        if(table[i] != NULL && table2[i] != NULL){
+        if(table[i] != NULL){
             delete table[i];
+        }
+    }
+    for(int i = 0; i<table_size; i++){
+        if(table2[i] != NULL){
             delete table2[i];
         }
     }
@@ -26,13 +32,11 @@ hashTable::~hashTable()
 void hashTable::insertGame(string name, int rating, string genre, int price)
 {   int index = 0;
     index = hashSum(name);
-    //cout<<index<<endl;
-    if(table[index] == NULL){
+    if(table[index] == NULL){ // no collision
         table[index] = new vector<VideoGame>;
         table[index]->push_back(VideoGame(name,rating,genre,price));
     }
-    else{
-        //cout<<"collision"<<endl;
+    else{ // collision 
         table[index]->push_back(VideoGame(name,rating,genre,price));
 
 
@@ -41,7 +45,7 @@ void hashTable::insertGame(string name, int rating, string genre, int price)
 }
 
 
-void hashTable::printInventory(){
+void hashTable::printInventory(){ //  prints out the title and price
    for(int i = 0; i< table_size; i++){
         if(table[i] != NULL){
             for(unsigned int j = 0; j<table[i]->size();j++){
@@ -54,18 +58,18 @@ void hashTable::printInventory(){
 
 }
 
-void hashTable::readFile(){
+void hashTable::readFile(){ //read in two files. first file contains video game scores and prices. second file contains esrb rating and info
     ifstream myFile;
     myFile.open("videoGames.txt");
     string line, name, rating, genre, price;
+    //reading in the first file
     if(myFile){
-        while(getline(myFile, line)){
+        while(getline(myFile, line)){ // using commas as the delimiter
             stringstream iss(line);
             getline(iss,name,',');
             getline(iss,rating,',');
             getline(iss,genre,',');
             getline(iss,price,',');
-            //cout<<name<<":"<<rating<<endl;
             insertGame(name, stoi(rating), genre, stoi(price));
         }
         myFile.close();
@@ -73,8 +77,9 @@ void hashTable::readFile(){
     ifstream myFile2;
     myFile2.open("GameInfo.txt");
     string line2, title, esrb, info;
+    //reading in the second file
     if(myFile2){
-        while(getline(myFile2, line2)){
+        while(getline(myFile2, line2)){ // using dashes as the delimiter 
             stringstream iss2(line2);
             getline(iss2,title,'-');
             getline(iss2,esrb,'-');
@@ -94,7 +99,6 @@ void hashTable::findGame(string name)
     string rating, info;
     bool found = false;
     int index = hashSum(name);
-    //cout<<index<<endl;
     if(table[index] != NULL){
         for(unsigned int i = 0; i<table[index]->size(); i++){
             if((*table[index])[i].title == name){
@@ -103,13 +107,13 @@ void hashTable::findGame(string name)
                 cout<<"Price: $"<<(*table[index])[i].price<<endl;
                 found = true;
                 int input;
-                while(input != 4){
+                while(input != 4){ // when the game is found, display menu for adding to cart, getting the rating, getting info
                     displayFindMenu();
                     cin >> input;
                     cin.clear();
                     switch(input){
                         case 1:
-                            if((*table[index])[i].added != true){
+                            if((*table[index])[i].added != true){ // checks for duplicates in shopping cart
                                 cart.push_back((*table[index])[i]);
                                 cout<<(*table[index])[i].title<<" has been added to the shopping cart"<<endl;
                                 (*table[index])[i].added = true;
@@ -120,14 +124,14 @@ void hashTable::findGame(string name)
                             
                             break;
                         case 2:
-                            info = getInfo((*table[index])[i].title);
+                            info = getInfo((*table[index])[i].title); //returns info form 2nd hashtable
                             cout<<info<<endl;
                             break;
                         case 3:
-                            rating = getESRB((*table[index])[i].title);
+                            rating = getESRB((*table[index])[i].title); // return esrb raing from second hashtable
                             cout<<"This game is rated: "<<rating<<endl;
                             break;
-                        case 4:
+                        case 4:// goes back to the first menu
                             break;
                         default:
                             cout<<"please enter a valid number between 1-4"<<endl;
@@ -145,15 +149,23 @@ void hashTable::findGame(string name)
     }
 }
 
-void hashTable::deleteGame(string title){
+void hashTable::deleteGame(string title){ 
     int index = hashSum(title);
     bool found = false;
-    if(table[index] != NULL){
+    if(table[index] != NULL){ //searching the first hashtable
         for(unsigned int i = 0; i<table[index]->size(); i++){
             if((*table[index])[i].title == title){
-                table[index]->erase(table[index]->begin() + i);
+                table[index]->erase(table[index]->begin() + i);//deleting fomr 1st hashtable
                 found = true;
-                break;
+                if(table2[index] != NULL){//searching the 2nd hashtable
+                    for(unsigned int j = 0; j<table2[index]->size(); j++){
+                        if((*table2[index])[j].name = title){
+                            table2[index]->erase(table2[index]->begin() + j); //deleting from 2nd hashtable
+                            break;
+                        }
+                    } 
+                }
+                
             }
         }
     }
@@ -165,8 +177,6 @@ void hashTable::deleteGame(string title){
 int hashTable::hashSum(string title){
     int sum = 0;
     for(unsigned int i = 0; i< title.length(); i++){
-        /*char a = title.at(i);
-        sum = sum + int(a);*/
         sum = sum + title[i];
 
     }
@@ -210,17 +220,17 @@ void hashTable::checkOut(){
     bool isEmpty = cart.empty();
     int sum = 0;
     if(isEmpty != true){
-        for(unsigned int i = 0; i<cart.size(); i++){
+        for(unsigned int i = 0; i<cart.size(); i++){ // find the total price
             sum = sum + cart[i].price;
         }
-        if(budget >= sum){
+        if(budget >= sum){ // if the budget is less than the total price, then when can delete from the cart
             for(unsigned int j = 0; j<cart.size(); j++){
-                deleteGame(cart[j].title);
+                deleteGame(cart[j].title); // delete from the inverntory
             }
 
-            budget = budget - sum;
+            budget = budget - sum; // subtract the total from the budget
             cout<<"We hope you enjoy your new games!"<<endl;
-            cart.erase(cart.begin(), cart.begin()+cart.size());
+            cart.erase(cart.begin(), cart.begin()+cart.size()); // delete
             return;
         }
         else{
@@ -236,10 +246,9 @@ void hashTable::checkOut(){
 
 }
 
-void hashTable::insertGameInfo(string name, string esrb, string info){
+void hashTable::insertGameInfo(string name, string esrb, string info){ // same as insertGame function
     int index = 0;
     index = hashSum(name);
-    //cout<<index<<endl;
     if(table2[index] == NULL){
         table2[index] = new vector<GameInfo>;
         table2[index]->push_back(GameInfo(name,esrb,info));
@@ -257,7 +266,7 @@ string hashTable::getESRB(string name)
     int index = hashSum(name);
     bool found = false;
     string rating;
-    if(table2[index] != NULL){
+    if(table2[index] != NULL){ // searches the 2nd hashtable
         for(unsigned int i = 0; i<table2[index]->size(); i++){
             if((*table2[index])[i].name == name){
                 rating = (*table2[index])[i].esrb;
@@ -275,7 +284,7 @@ string hashTable::getInfo(string name)
     int index = hashSum(name);
     bool found = false;
     string info;
-    if(table2[index] != NULL){
+    if(table2[index] != NULL){ // searches the 2nd hashtable
         for(unsigned int i = 0; i<table2[index]->size(); i++){
             if((*table2[index])[i].name == name){
                 info = (*table2[index])[i].descrption;
