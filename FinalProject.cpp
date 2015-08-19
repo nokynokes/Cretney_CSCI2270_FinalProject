@@ -1,4 +1,5 @@
-
+//#include <swag.cpp>
+//#include <taco.cpp>
 #include "hashTable.h"
 #include "hashTable.cpp"
 #include <iostream>
